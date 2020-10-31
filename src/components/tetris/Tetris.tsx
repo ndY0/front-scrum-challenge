@@ -1,11 +1,19 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
+import { TetrisEngine } from "./engine/tetris-engine";
+import { TetrisRenderer } from "./renderer/tetris-renderer";
 
 const Tetris = (initWidth: number, initHeight: number) => {
-  const [height, setHeight] = useState(initHeight);
-  const [width, setWidth] = useState(initWidth);
-  const canvas = useRef(null);
-  return <canvas height={height} width={width}></canvas>;
+  const [height] = useState(initHeight);
+  const [width] = useState(initWidth);
+  const canvasRef = useRef(null);
+  const [engine] = useState(new TetrisEngine());
+  const [renderer] = useState(new TetrisRenderer());
+  useEffect(() => {
+    renderer.setCanvas(canvasRef.current);
+    engine.set;
+  }, []);
+  return <canvas height={height} width={width} ref={canvasRef}></canvas>;
 };
 
 const mapStateToProps = (state) => ({

@@ -4,10 +4,10 @@ class TetriminoState {
   private height: number;
   private width: number;
   private positions: Array<Array<boolean>>;
-  private offsetTop: number;
-  private offsetBottom: number;
-  private offsetLeft: number;
-  private offsetRight: number;
+  private offsetTop: number = 0;
+  private offsetBottom: number = 0;
+  private offsetLeft: number = 0;
+  private offsetRight: number = 0;
 
   public getOffsetTop = () => this.offsetTop;
   public getOffsetBottom = () => this.offsetBottom;

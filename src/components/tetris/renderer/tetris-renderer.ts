@@ -1,0 +1,3 @@
+class TetrisRenderer {}
+
+export { TetrisRenderer };

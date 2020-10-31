@@ -1,20 +1,20 @@
 import { TetriminoState } from "./tetrimino-state";
 
 abstract class Tetrimino {
-  private states: Array<TetriminoState>;
-  private currentStateIndex: number;
+  private states: Array<TetriminoState> = [];
+  private currentStateIndex: number = 0;
 
   public setCurrentStateIndex = (index: number) => {
-    if ((index) => 0 && index < this.states.length) {
+    if (index >= 0 && index < this.states.length) {
       this.currentStateIndex = index;
     } else {
       throw new Error("state index out of range");
     }
   };
 
-  protected setStates = (states: Array<TetriminoState>) => {
+  protected setStates(states: Array<TetriminoState>) {
     this.states = states;
-  };
+  }
 
   // 0 mean clock wise, 1 counter clock wise
   public rotate(direction: 0 | 1) {
