@@ -8,6 +8,8 @@ class TetriminoState {
   private offsetBottom: number = 0;
   private offsetLeft: number = 0;
   private offsetRight: number = 0;
+  private effectiveHeight: number = 0;
+  private effectiveWidth: number = 0;
 
   public getOffsetTop = () => this.offsetTop;
   public getOffsetBottom = () => this.offsetBottom;
@@ -15,6 +17,8 @@ class TetriminoState {
   public getOffsetLeft = () => this.offsetLeft;
   public getHeight = () => this.height;
   public getWidth = () => this.width;
+  public getEffectiveHeight = () => this.effectiveHeight;
+  public getEffectiveWidth = () => this.effectiveWidth;
 
   constructor(positions: Array<Array<boolean>>) {
     this.height = positions.length;
@@ -25,6 +29,7 @@ class TetriminoState {
     }
     this.positions = positions;
     this.initialiseOffsets();
+    this.initialiseEffectiveDimensions();
   }
 
   private initialiseOffsets() {
@@ -64,6 +69,13 @@ class TetriminoState {
       .reduce((lowestIndex: number, current: number) =>
         lowestIndex > current ? current : lowestIndex
       );
+  }
+
+  private initialiseEffectiveDimensions() {
+    this.effectiveWidth =
+      this.getWidth() - (this.getOffsetLeft() + this.getOffsetRight());
+    this.effectiveHeight =
+      this.getHeight() - (this.getOffsetBottom() + this.getOffsetTop());
   }
 }
 

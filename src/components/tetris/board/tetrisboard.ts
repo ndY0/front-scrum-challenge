@@ -12,6 +12,9 @@ class TetrisBoard {
   }
 
   public getBoard = () => this.board;
+  public getWidth = () => this.width;
+  public getDepth = () => this.depth;
+  public getValueAt = (x: number, y: number) => this.board[y][x];
 
   public update(points: Array<[number, number, boolean]>) {
     points.forEach(([x, y, value]: [number, number, boolean]) => {

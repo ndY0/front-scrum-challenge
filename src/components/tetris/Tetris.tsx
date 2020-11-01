@@ -1,24 +1,29 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, MutableRefObject } from "react";
 import { connect } from "react-redux";
-import { TetrisEngine } from "./engine/tetris-engine";
 import { TetrisRenderer } from "./renderer/tetris-renderer";
+import { EventEmitter } from "events";
+import { useTetrisKeybindingHook } from "../../hooks/tetris-keybinding-hook";
+import { AbstractTetrisEngine } from "./engines/abstract-tetris-engine";
 
-const Tetris = (initWidth: number, initHeight: number) => {
+const Tetris = (
+  initWidth: number,
+  initHeight: number,
+  engine: AbstractTetrisEngine
+) => {
   const [height] = useState(initHeight);
   const [width] = useState(initWidth);
-  const canvasRef = useRef(null);
-  const [engine] = useState(new TetrisEngine());
-  const [renderer] = useState(new TetrisRenderer());
-  useEffect(() => {
-    renderer.setCanvas(canvasRef.current);
-    engine.set;
-  }, []);
+  const canvasRef: MutableRefObject<HTMLCanvasElement> = useRef(
+    new HTMLCanvasElement()
+  );
+  const eventEmitter = new EventEmitter();
+  const [renderer] = useState(new TetrisRenderer(canvasRef));
+  engine.setRenderer(renderer);
+  useTetrisKeybindingHook(eventEmitter);
+  useEffect(() => {}, []);
   return <canvas height={height} width={width} ref={canvasRef}></canvas>;
 };
 
-const mapStateToProps = (state) => ({
-  tetrisStates: state.tetris.states,
-});
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({});
 
