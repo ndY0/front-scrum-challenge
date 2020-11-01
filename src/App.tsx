@@ -1,26 +1,13 @@
 import logo from "./logo.svg";
 import "./App.css";
-import React from "react";
+import React, { useState } from "react";
+import { Tetris } from "./components/tetris/Tetris";
+import { TetrisEngine } from "./components/tetris/engines/tetris-engine";
+import { EventEmitter } from "events";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+  const [engine] = useState(new TetrisEngine(new EventEmitter()));
+  return <Tetris initWidth={240} initHeight={600} engine={engine} />;
+};
 
 export default App;

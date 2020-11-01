@@ -1,30 +1,32 @@
-import React, { useState, useRef, useEffect, MutableRefObject } from "react";
-import { connect } from "react-redux";
+import React, { useState, useRef, MutableRefObject, useEffect } from "react";
 import { TetrisRenderer } from "./renderer/tetris-renderer";
-import { EventEmitter } from "events";
 import { useTetrisKeybindingHook } from "../../hooks/tetris-keybinding-hook";
 import { AbstractTetrisEngine } from "./engines/abstract-tetris-engine";
 
-const Tetris = (
-  initWidth: number,
-  initHeight: number,
-  engine: AbstractTetrisEngine
-) => {
+const Tetris = ({
+  initWidth,
+  initHeight,
+  engine,
+}: {
+  initWidth: number;
+  initHeight: number;
+  engine: AbstractTetrisEngine;
+}) => {
   const [height] = useState(initHeight);
   const [width] = useState(initWidth);
-  const canvasRef: MutableRefObject<HTMLCanvasElement> = useRef(
-    new HTMLCanvasElement()
-  );
-  const eventEmitter = new EventEmitter();
+  const canvasRef: MutableRefObject<HTMLCanvasElement | null> = useRef(null);
   const [renderer] = useState(new TetrisRenderer(canvasRef));
   engine.setRenderer(renderer);
-  useTetrisKeybindingHook(eventEmitter);
-  useEffect(() => {}, []);
+  useTetrisKeybindingHook(engine.getEventEmitter());
+  useEffect(() => {
+    engine.run();
+    // const test = canvasRef.current?.getContext("2d");
+    // if (test) {
+    //   test.fillStyle = "#000";
+    //   test.fillRect(0, 0, width, height);
+    // }
+  }, [engine]);
   return <canvas height={height} width={width} ref={canvasRef}></canvas>;
 };
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = (dispatch) => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps, Tetris);
+export { Tetris };

@@ -19,6 +19,7 @@ class TetriminoState {
   public getWidth = () => this.width;
   public getEffectiveHeight = () => this.effectiveHeight;
   public getEffectiveWidth = () => this.effectiveWidth;
+  public getPositions = () => this.positions;
 
   constructor(positions: Array<Array<boolean>>) {
     this.height = positions.length;

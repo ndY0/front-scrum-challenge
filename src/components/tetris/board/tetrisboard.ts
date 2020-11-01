@@ -4,8 +4,8 @@ class TetrisBoard {
   private depth: number;
 
   constructor(width: number, depth: number) {
-    this.board = Array(depth).map((_noise: any) =>
-      Array(width).map((_noise: any) => false)
+    this.board = Array.from({ length: depth }, (_1, _2) =>
+      Array.from({ length: width }, (_1, _2) => false)
     );
     this.width = width;
     this.depth = depth;

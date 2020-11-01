@@ -2,18 +2,21 @@ import { MutableRefObject } from "react";
 import { TetrisBoard } from "../board/tetrisboard";
 
 class TetrisRenderer {
-  private canvasRef: MutableRefObject<HTMLCanvasElement>;
-  constructor(canvasRef: MutableRefObject<HTMLCanvasElement>) {
+  private canvasRef: MutableRefObject<HTMLCanvasElement | null>;
+  constructor(canvasRef: MutableRefObject<HTMLCanvasElement | null>) {
     this.canvasRef = canvasRef;
   }
   public async draw(board: TetrisBoard) {
-    const canvasContext = this.canvasRef.current.getContext("2d");
+    const canvasContext = this.canvasRef.current?.getContext("2d");
+    const canvas = this.canvasRef.current;
     if (canvasContext) {
+      canvasContext.fillStyle = "#fff";
+      canvasContext.fillRect(0, 0, 200, 600);
       const tileWidth = Math.floor(
-        this.canvasRef.current.width / board.getWidth()
+        (canvas ? canvas.width : 0) / board.getWidth()
       );
       const tileDepth = Math.floor(
-        this.canvasRef.current.height / board.getDepth()
+        (canvas ? canvas.height : 0) / board.getDepth()
       );
       // draw the tile on canvas
       board.getBoard().forEach((line: boolean[], depthIndex: number) => {
